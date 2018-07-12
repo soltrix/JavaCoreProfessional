@@ -1,21 +1,17 @@
 package ru.solodkov.javacoreprofessional;
 
-import org.sqlite.JDBC;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    static Connection conn = null;
-    static Statement stmt = null;
-    static ResultSet rs = null;
-    static PreparedStatement ps = null;
-    static Integer price = 0;
-    static List<String> list = new ArrayList<>();
+    private static Connection conn = null;
+    private static Statement stmt = null;
+    private static ResultSet rs = null;
+    private static PreparedStatement ps = null;
+    private static Integer price = 0;
+    private static List<String> list = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -34,7 +30,7 @@ public class App {
             System.out.println("Чтобы вывести товары в заданном ценовом диапазоне напишите: «/товарыпоцене 100 600»");
             Scanner sc = new Scanner(System.in);
             String b = sc.nextLine();
-            String[] fields = b.split("\t");
+            String[] fields = b.split(" ");
 
             if (fields.length > 0) {
                 if (fields[0].equals("/цена")) {
@@ -58,7 +54,7 @@ public class App {
         }
     }
 
-    static void createTable() {
+    private static void createTable() {
         try {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Products\n" +
                     "(\n" +
@@ -73,13 +69,13 @@ public class App {
         }
     }
 
-    static void fillTable() {
+    private static void fillTable() {
         try {
             stmt.executeUpdate("DELETE FROM Products");
             System.out.println("Table Products clear");
 
             ps = conn.prepareStatement("INSERT INTO Products (prodid, title, cost) VALUES(?, ?, ?);");
-            for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= 1000; i++) {
                 ps.setString(1, "id_товара " + i);
                 ps.setString(2, "товар" + i);
                 ps.setInt(3, i * 10);
@@ -91,7 +87,7 @@ public class App {
         }
     }
 
-    static void getPriceByTitle(String field) {
+    private static void getPriceByTitle(String field) {
         try {
             ps = conn.prepareStatement("SELECT * FROM Products WHERE title=?;");
             ps.setString(1, field);
@@ -105,7 +101,7 @@ public class App {
         }
     }
 
-    static void changePrice(String title, String price) {
+    private static void changePrice(String title, String price) {
         try {
             ps = conn.prepareStatement("UPDATE Products SET cost=? WHERE title=?;");
             ps.setInt(1, Integer.parseInt(price));
@@ -117,7 +113,7 @@ public class App {
         }
     }
 
-    static void getProductsByRange(String from, String to) {
+    private static void getProductsByRange(String from, String to) {
         try {
             ps = conn.prepareStatement("SELECT * FROM Products WHERE cost>=? AND cost<=?");
             ps.setInt(1, Integer.parseInt(from));
