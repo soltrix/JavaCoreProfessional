@@ -29,12 +29,12 @@ public class App {
             // task 2
             fillTable();
 
-            Scanner sc = new Scanner(System.in);
-            String b = sc.nextLine();
-            String[] fields = b.split("\t");
             System.out.println("Чтобы узнать цену товара напишите: «/цена товар545»");
             System.out.println("Чтобы изменить цену товара напишите: «/сменитьцену товар10 10000»");
             System.out.println("Чтобы вывести товары в заданном ценовом диапазоне напишите: «/товарыпоцене 100 600»");
+            Scanner sc = new Scanner(System.in);
+            String b = sc.nextLine();
+            String[] fields = b.split("\t");
 
             if (fields.length > 0) {
                 if (fields[0].equals("/цена")) {
