@@ -23,7 +23,7 @@ public class App {
             // task 1
             createTable();
             // task 2
-            fillTable();
+            //fillTable();
 
             System.out.println("Чтобы узнать цену товара напишите: «/цена товар545»");
             System.out.println("Чтобы изменить цену товара напишите: «/сменитьцену товар10 10000»");
@@ -33,18 +33,19 @@ public class App {
             String[] fields = b.split(" ");
 
             if (fields.length > 0) {
-                if (fields[0].equals("/цена")) {
-                    // task 3
-                    getPriceByTitle(fields[1]);
-                }
-                if (fields[0].equals("/сменитьцену")) {
-                    // task 4
-                    changePrice(fields[1], fields[2]);
-                }
-
-                if (fields[0].equals("/товарыпоцене")) {
-                    // task 5
-                    getProductsByRange(fields[1], fields[2]);
+                switch (fields[0]) {
+                    case ("/цена"):
+                        // task 3
+                        getPriceByTitle(fields[1]);
+                        break;
+                    case ("/сменитьцену"):
+                        // task 4
+                        changePrice(fields[1], fields[2]);
+                        break;
+                    case ("/товарыпоцене"):
+                        // task 5
+                        getProductsByRange(fields[1], fields[2]);
+                        break;
                 }
             }
             stmt.close();
@@ -107,7 +108,7 @@ public class App {
             ps.setInt(1, Integer.parseInt(price));
             ps.setString(2, title);
             ps.executeUpdate();
-            System.out.println("Table Products is updated");
+            System.out.println("Prise on " + title + " changed to " + price);
         } catch (SQLException e) {
             e.printStackTrace();
         }
