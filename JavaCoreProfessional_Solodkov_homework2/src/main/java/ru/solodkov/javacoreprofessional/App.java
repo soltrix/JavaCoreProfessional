@@ -23,27 +23,26 @@ public class App {
             // task 1
             createTable();
             // task 2
-            //fillTable();
+            fillTable();
 
             System.out.println("Чтобы узнать цену товара напишите: «/цена товар545»");
             System.out.println("Чтобы изменить цену товара напишите: «/сменитьцену товар10 10000»");
             System.out.println("Чтобы вывести товары в заданном ценовом диапазоне напишите: «/товарыпоцене 100 600»");
             Scanner sc = new Scanner(System.in);
-            String b = sc.nextLine();
-            String[] fields = b.split(" ");
+            String[] fields = sc.nextLine().split(" ");
 
             if (fields.length > 0) {
                 switch (fields[0]) {
+                    // task 3
                     case ("/цена"):
-                        // task 3
                         getPriceByTitle(fields[1]);
                         break;
+                    // task 4
                     case ("/сменитьцену"):
-                        // task 4
                         changePrice(fields[1], fields[2]);
                         break;
+                    // task 5
                     case ("/товарыпоцене"):
-                        // task 5
                         getProductsByRange(fields[1], fields[2]);
                         break;
                 }
@@ -60,9 +59,9 @@ public class App {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Products\n" +
                     "(\n" +
                     "    id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
-                    "    prodid      TEXT                NOT NULL,\n" +
-                    "    title       TEXT                NOT NULL,\n" +
-                    "    cost        INTEGER             NOT NULL\n" +
+                    "    prodid      VARCHAR (15)                NOT NULL,\n" +
+                    "    title       VARCHAR (10)                NOT NULL,\n" +
+                    "    cost        MEDIUMINT                   NOT NULL\n" +
                     ");");
             System.out.println("Table Products created successfully");
         } catch (SQLException e) {
@@ -73,10 +72,11 @@ public class App {
     private static void fillTable() {
         try {
             stmt.executeUpdate("DELETE FROM Products");
+            //stmt.executeUpdate("VACUUM");
             System.out.println("Table Products clear");
 
             ps = conn.prepareStatement("INSERT INTO Products (prodid, title, cost) VALUES(?, ?, ?);");
-            for (int i = 1; i <= 1000; i++) {
+            for (int i = 1; i <= 10000; i++) {
                 ps.setString(1, "id_товара " + i);
                 ps.setString(2, "товар" + i);
                 ps.setInt(3, i * 10);
