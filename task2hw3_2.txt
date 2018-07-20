@@ -1,0 +1,1 @@
+Using FCM, you can notify a client app that new email or other data is available to sync. 
