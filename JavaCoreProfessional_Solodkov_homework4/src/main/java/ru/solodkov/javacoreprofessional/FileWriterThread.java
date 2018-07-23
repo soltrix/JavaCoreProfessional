@@ -1,7 +1,6 @@
 package ru.solodkov.javacoreprofessional;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class FileWriterThread extends Thread {
     private final File file = new File("homework4task2.txt");
